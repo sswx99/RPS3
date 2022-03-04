@@ -1,9 +1,8 @@
-# Godot Debug Utility
+# RPS3 Game
 
-This is a simple addon for Godot 3.2 which adds an easily customizable debug overlay menu to your games which shows information about your game's performance etc. 
+RPS3 is a infinite runner game made with Godot Engine.
 
-# Installation
-1. Download the repo and extract it.
-2. Add a folder named `addons` to your project folder if it doesn't already exist.
-3. Copy this folder into `addons`.
-4. You can now use this by adding it to the Control node you currently use for gui, use the F3 key to toggle it on and off
+## Screenshots
+
+![RPS3-1](https://user-images.githubusercontent.com/68604417/156723067-f91c38fe-3bc5-463b-bf61-0901db45cb41.PNG)
+![RPS3-2](https://user-images.githubusercontent.com/68604417/156723301-1d1c091f-a97d-4701-82ad-e3681af0f11a.PNG)
