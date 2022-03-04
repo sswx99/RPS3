@@ -1,0 +1,175 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://scripts/game.gd" type="Script" id=1]
+[ext_resource path="res://objects/myHand.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/enemyHandCreater.gd" type="Script" id=3]
+[ext_resource path="res://assets/fonts/scoreFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/fonts/uiFont72.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/fonts/uiFont48.tres" type="DynamicFont" id=6]
+[ext_resource path="res://assets/fonts/uiFontMenu.tres" type="DynamicFont" id=7]
+
+[sub_resource type="Animation" id=1]
+resource_name = "fadeInAnimation"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 0.392157 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0.392157 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[node name="game" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ],
+"_edit_lock_": true,
+"_edit_vertical_guides_": [  ]
+}
+
+[node name="myHand" parent="." instance=ExtResource( 2 )]
+position = Vector2( 96, 912 )
+paddingBottom = 128
+
+[node name="myHand2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 288, 912 )
+index = 1
+paddingBottom = 128
+
+[node name="myHand3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 480, 912 )
+index = 2
+paddingBottom = 128
+
+[node name="enemyHandCreater" type="Node2D" parent="."]
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+posY = -100
+speed = 200.0
+interval = 300.0
+speedIncrement = 3.0
+
+[node name="background" type="ColorRect" parent="."]
+show_behind_parent = true
+light_mask = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 576.0
+margin_bottom = 1024.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 1, 0.341176, 0.341176, 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="fade" type="ColorRect" parent="background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 0.392157 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fadeOutAnimation" type="AnimationPlayer" parent="background/fade"]
+anims/fadeInAnimation = SubResource( 1 )
+anims/fadeOutAnimation = SubResource( 2 )
+
+[node name="scoreText" type="Label" parent="."]
+visible = false
+self_modulate = Color( 1, 1, 1, 0.282353 )
+show_behind_parent = true
+light_mask = 0
+margin_right = 576.0
+margin_bottom = 1024.0
+hint_tooltip = "Score"
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "0"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ui" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="column" type="VBoxContainer" parent="ui"]
+margin_left = 64.0
+margin_top = 144.0
+margin_right = 512.0
+margin_bottom = 800.0
+custom_constants/separation = 64
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="gameNameText" type="Label" parent="ui/column"]
+margin_right = 448.0
+margin_bottom = 55.0
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/line_spacing = 2
+custom_constants/shadow_offset_y = 5
+text = "RPS:Endless"
+align = 1
+
+[node name="highscoreText" type="Label" parent="ui/column"]
+margin_top = 119.0
+margin_right = 448.0
+margin_bottom = 162.0
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 6 )
+text = "Highscore"
+align = 1
+valign = 1
+
+[node name="playButton" type="Button" parent="ui"]
+pause_mode = 2
+margin_right = 576.0
+margin_bottom = 1024.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color_pressed = Color( 0.160784, 0.160784, 0.160784, 1 )
+text = "TAP & PLAY"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="ui/playButton" to="." method="_on_playButton_pressed"]
